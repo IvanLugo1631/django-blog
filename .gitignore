@@ -1,0 +1,4 @@
+.env
+.venv
+blog/__pycache__
+website/__pycache__
