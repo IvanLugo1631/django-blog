@@ -2,6 +2,12 @@ from django.db import models
 from django.utils import timezone
 from django.conf import settings
 
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return(
+            super().get_queryset().filter(status=Post.Status.PUBLISHED)
+        )
+
 # Create your models here.
 class Post(models.Model):
     class Status(models.TextChoices):
@@ -28,7 +34,8 @@ class Post(models.Model):
         on_delete=models.CASCADE,
         related_name='blog_posts'
     )
-
+    objects = models.Manager() #The default manager
+    published = PublishedManager()
     class Meta:
         #Ordering in descending order using hyphen
         ordering = ['-publish']
